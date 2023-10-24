@@ -16,17 +16,12 @@ public class ExtractorFrame extends JFrame {
     ArrayList<String> noiseWords;
     ArrayList<String> filteredTextWords;
     File textFile;
-    File noiseFile;
 
     JPanel topPnl;
     JPanel midPnl;
     JPanel botPnl;
 
-    JLabel textLbl;
-    JLabel noiseLbl;
     JButton textBtn;
-    JButton noiseBtn;
-    JButton printBtn;
 
     JLabel fileLbl;
     JTextArea displayArea;
@@ -49,21 +44,11 @@ public class ExtractorFrame extends JFrame {
 
     private void createTopPanel() {
         topPnl = new JPanel();
-        textLbl = new JLabel();
-        noiseLbl = new JLabel();
         textBtn = new JButton("Upload Text File");
-        noiseBtn = new JButton("Upload Noise File");
-        printBtn = new JButton("Print");
 
         textBtn.addActionListener((ActionEvent ae) -> textFileHandler());
-        noiseBtn.addActionListener((ActionEvent ae) -> noiseFileHandler());
-        printBtn.addActionListener((ActionEvent ae) -> printStats());
 
-        topPnl.add(textLbl);
-        topPnl.add(noiseLbl);
         topPnl.add(textBtn);
-        topPnl.add(noiseBtn);
-        topPnl.add(printBtn);
         add(topPnl, BorderLayout.NORTH);
     }
 
@@ -89,7 +74,7 @@ public class ExtractorFrame extends JFrame {
             return;
         }
 
-        noiseFile = new File("src/EnglishStopWords.txt");
+        File noiseFile = new File("src/EnglishStopWords.txt");
         noiseWords = new ArrayList<String>();
         try {
             Scanner myReader = new Scanner(noiseFile);
@@ -132,12 +117,8 @@ public class ExtractorFrame extends JFrame {
 
     private void textFileHandler() {
         textFile = fileOpener();
-        textLbl.setText(textFile.getName());
-    }
-
-    private void noiseFileHandler() {
-        noiseFile = fileOpener();
-        noiseLbl.setText(noiseFile.getName());
+        fileLbl.setText(textFile.getName());
+        printStats();
     }
 
     private File fileOpener()
